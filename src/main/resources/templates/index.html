@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/main_layout}">
+<head>
+    <title>Portfolio</title>
+</head>
+<body>
+<div layout:fragment="content" class="container bg-secondary">
+
+    <div class="jumbotron bg-dark row">
+        <div class="col-lg">
+            <h1 class="text-primary display-4 d-block d-lg-none">PORTFOLIO</h1>
+            <h1 class="text-primary display-3 d-none d-lg-block">PORTFOLIO</h1>
+            <p class="text-primary text-justify display-5">My description</p>
+        </div>
+        <div class="col-sm d-flex justify-content-end">
+            <img class="img-fluid w-50 d-none d-lg-block" src="/../static/images/Me.png" th:src="@{/images/Me.png}" alt="Slide">
+<!--            <img class="img-fluid w-100 d-none d-lg-block" src="/../static/images/technologyDesign.png" th:src="@{/images/technologyDesign.png}" alt="Slide">-->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="dropdown col">
+            <button class="btn btn-dark text-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filter by technology
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a th:each="technology : ${technologyList}" class="dropdown-item" th:text="${technology.technologyName}" th:href="'/index/' + ${technology.technologyID}">Technology Option</a>
+            </div>
+        </div>
+        <div th:if="${isFilter} != null" class="col">
+            <a type="button" class="btn btn-outline-primary" href="/index">NO FILTER</a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card-columns">
+        <div th:each="project, row : ${projectList}">
+            <div class="card mdb-color lighten-2 text-center z-depth-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card">
+                                <div th:if="${#lists.size(project.imagePathList)} > 0" th:id="'carouselControls' + ${row.index}" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div th:each="imagepath, iter : ${project.imagePathList}" class="carousel-item" th:classappend="${iter.index} == 0 ? active" th:with="thpath = '/images/' + ${imagepath.path}">
+                                            <img class="d-block w-100" src="/../static/images/${imagepath}" th:src="${thpath}" alt="Slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" th:href="'#carouselControls' + ${row.index}" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" th:href="'#carouselControls' + ${row.index}" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${project.title} ?: 'NULL'">Title</h5>
+                                    <h6 class="card-title" th:text="${project.date} ?: 'NULL'">Date</h6>
+                                    <a th:if="${project.gitHubRepositoryPath} != 'PRIVATE'" class="card-title" th:href="'https://' + ${project.gitHubRepositoryPath}">GitHub Repository: PUBLIC</a>
+                                    <a th:if="${project.gitHubRepositoryPath} == 'PRIVATE'" class="card-title">GitHub Repository: PRIVATE</a>
+                                    <h6 class="card-title">Technologies used:</h6>
+                                    <span class="card-text text-justify font-weight-bold" th:if="${project.technologyList} != null" th:each="technology, iterStat : ${project.technologyList}" th:text="!${iterStat.last} ? ${technology.technologyName} + ', ': ${technology.technologyName}">Technologies name</span>
+                                    <p  class="card-text text-justify" th:text="${project.description} ?: 'NULL'">Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

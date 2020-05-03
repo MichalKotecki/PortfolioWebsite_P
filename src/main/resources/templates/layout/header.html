@@ -1,0 +1,25 @@
+<header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light bg-dark border-bottom border-primary box-shadow mb-3">
+        <div class="container">
+            <img width="35" height="35" src="../../static/images/favicon.ico" th:src="@{/favicon.ico}">
+            <a class="navbar-brand text-white ml-5">portfolio</a>
+            <button class="navbar-toggler bg-primary ml-5" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/index">Portfolio</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link text-white">About Me</a>-->
+<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
